@@ -93,7 +93,7 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 				
 				wait=true;
 				
-				var urlOpt=require('url').parse(url);
+				var urlOpt=require('url').parse(config.modStatusUrl);
 				urlOpt.auth=config.modStatusUser+":"+password;
 				
 				require('http').get(urlOpt, function(res){
@@ -124,7 +124,6 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 }], function(){
 	
 	var page='';
-	console.log(modStatusResult);
 	modStatusResult.setEncoding('utf8');
 	modStatusResult.on('data', function (chunk) {
 		page+=chunk;
@@ -132,12 +131,45 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 	modStatusResult.on('end', function (chunk) {
 		page+=chunk;
 		if(page.indexOf('Apache Server Status')>=0){
+			console.log('Started Mod-Status Scrapper');
 			
+			var parsePage=function(page){
+				var tables=page.split('<table>'); tables.shift();
+				
+				var rows=table[0].split('<tr>'); rows.shift(); //discard first
+				
+				rows.forEach(function(r){
+					
+					console.log(r.split('</tr>')[0]);
+					
+				});
+				
+			};
+			
+			parsePage(page);
 			setInterval(function(){
 				
-								
 				
-			}, 5000);
+				require('http').get(config.modStatusUrl, function(res){
+				
+					if(res.statusCode==200){
+						
+						var page='';
+						res.on('data', function (chunk) {
+							page+=chunk;
+						});
+						res.on('end', function (chunk) {
+							parsePage(page);
+						});
+					}
+
+				}).on('error', function(e){
+				  console.log("Got error: " + e.message);
+				});
+				
+				
+								
+			}, 2000);
 			
 			next();	
 		}
