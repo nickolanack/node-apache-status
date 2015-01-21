@@ -74,7 +74,7 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 				wait=true;
 				
 				var urlOpt=require('url').parse(url);
-				urlOpt.auth={username:config.modStatusUser, password:password};
+				urlOpt.auth=config.modStatusUser+":"+password:password;
 				
 				require('http').get(urlOpt, function(res){
 
