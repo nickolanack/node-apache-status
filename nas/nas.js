@@ -58,12 +58,12 @@ var dialog=[['useModStatus', 'Use mod-status? (y/n)', function(response){
 var current;
 var next=function(){
 	if(dialog.length){
-		
 		current=dialog.shift();
 		process.stdout.write(current[1]);
 	}
 }
 process.stdin.on('data', function (text) {
+	
 	if(current.length==3&&(typeof current[2])=='function'){
 		//use function to parse response, it can also insert additional dialog steps
 		config[current[0]]=current[2]();
@@ -71,6 +71,7 @@ process.stdin.on('data', function (text) {
 		//use response as value
 		config[current[0]]=text;
 	}
+	console.log('set ['+current[0]+']='+text);
 	next();
 });
 
