@@ -138,9 +138,23 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 				
 				var rows=tables[0].split('<tr>'); rows.shift(); //discard first
 				
-				rows.forEach(function(r){
+				rows.forEach(function(r, i){
+					if(i==0)return; //skip header
+					var row=r.split('</tr>')[0];
+					var tdatas=row.split('<td>'); tdatas.shift();
 					
 					console.log(r.split('</tr>')[0]);
+					
+					if(i==1){
+						
+						tdatas.forEach(function(t,i){
+							
+							var tdata=t.split('</td>')[0];
+							console.log(i+': '+tdata);
+							
+						});
+						
+					}
 					
 				});
 				
