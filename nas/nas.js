@@ -43,16 +43,30 @@ require('http').get("http://media.geolive.ca/server-status", function(res) {
 
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
-var util = require('util');
+var config={};
+var dialog=[['useModStatus', 'Use mod-status? (y/n)', function(response){
+	
+	if(response=="y\n"){
+		dialog.splice(0,0,[]);
+		return true;
+	}
+	return false;
+	
+}]]
 
+
+var current;
+var next=function(){
+	if(dialog.length){
+		
+		current=dialog.shift();
+		process.stdout.write(current[1]);
+	}
+}
 process.stdin.on('data', function (text) {
-  console.log('received data:', text);
-  if (text === 'quit\n') {
-    done();
-  }
+	config[current[0]]=current[2]();
+	next();
 });
 
-function done() {
-  console.log('Now that process.stdin is paused, there is nothing more to do.');
-  process.exit();
-}
+next();
+
