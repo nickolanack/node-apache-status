@@ -160,21 +160,23 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 					
 					//if(i==1){
 						
-						tdatas.forEach(function(t,i){
+						
 							
-							var tdata=t.split('</td>')[0];
-							console.log(tdata);
-							var ip=tdata[10];
-							ip=ip.substring(ip.indexOf('>')+1);
-							ips.push(ip);
+					
+					
+					var ip=tdatas[10]; 
+					ip=ip.split('</td>')[0];
+					ip=ip.substring(ip.indexOf('>')+1);
+					ips.push(ip);
+					
+					var mode=tdatas[3];
+					mode=mode.split('</td>')[0];
+					mode=mode.substring(mode.indexOf('>')+1);
+					modes.push(modeTable[mode]);
+					
 							
-							var mode=tdata[3];
-							mode=mode.substring(mode.indexOf('>')+1);
-							modes.push(modeTable[mode]);
 							
-							
-							
-						});
+						
 						
 					//}
 					
