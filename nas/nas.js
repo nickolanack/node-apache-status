@@ -63,7 +63,7 @@ var next=function(){
 	}
 }
 process.stdin.on('data', function (text) {
-	
+	console.log(current[0]+'=>'+current.length+': '+(typeof current[2]));
 	if(current.length==3&&(typeof current[2])=='function'){
 		//use function to parse response, it can also insert additional dialog steps
 		config[current[0]]=current[2]();
