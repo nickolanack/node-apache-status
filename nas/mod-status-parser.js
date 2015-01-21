@@ -92,7 +92,7 @@ uniqueActiveIps.forEach(function(ip){
 	}
 	var h=[];
 	is.forEach(function(i){
-		h.push(h[i]);
+		h.push(hosts[i]);
 	})
 	var object={ip:ip, numSlots:is.length, hosts:h, slots:is};
 	
