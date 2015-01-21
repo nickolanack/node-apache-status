@@ -78,7 +78,7 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 				
 				require('http').get(urlOpt, function(res){
 
-					console.log('status: '+res.status);
+					console.log('status: '+res.statusCode);
 
 					wait=false; next();
 				
