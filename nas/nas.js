@@ -185,7 +185,7 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 				});
 				
 				modes.forEach(function(m,i){
-					
+					if((['open']).indexOf(m)>=0)return;
 					console.log(JSON.stringify({mode:m, ip:ips[i]}));
 					
 				})
