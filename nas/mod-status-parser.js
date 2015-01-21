@@ -94,7 +94,7 @@ uniqueActiveIps.forEach(function(ip){
 	is.forEach(function(i){
 		h.push(h[i]);
 	})
-	var object={ip:ip, numSlots:is.length, hosts:h};
+	var object={ip:ip, numSlots:is.length, hosts:h, slots:is};
 	
 	console.log(JSON.stringify(object));
 	
