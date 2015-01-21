@@ -44,7 +44,12 @@ var next=function(){
 	
 	if((!wait)&&dialog.length){
 		current=dialog.shift();
-		process.stdout.write(current[1]);
+		if((typeof current)=='function'){
+			current();
+		}else{
+			process.stdout.write(current[1]);
+		}
+		
 	}
 	
 	
@@ -58,12 +63,12 @@ var last=function(){
 }
 
 
-
+var modStatusResult=null;
 var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 	
 	wait=true;
 	require('http').get(url, function(res) {
-
+		modStatusResult=res;
 		if(res.statusCode==401){
 			//needs user-name and password
 			console.log('url requires authentication');
@@ -77,8 +82,10 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 				urlOpt.auth=config.modStatusUser+":"+password;
 				
 				require('http').get(urlOpt, function(res){
-
-					console.log('status: '+res.statusCode);
+					modStatusResult=res;
+					if(res.statusCode==200){
+						config.modStatusUrl=urlOpt;
+					}
 
 					wait=false; next();
 				
@@ -99,9 +106,14 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 	
 	return url
 	
-}]]
+}], function(){
+	
+	console.log(JSON.stringify(modStatusResult));
+	next();	
+	
+}]
 
-dialog=[['useModStatus', 'Use mod-status? (y/n) ', function(use){
+var dialogUseModeStatus=[['useModStatus', 'Use mod-status? (y/n) ', function(use){
 	
 	if(use=="y"){
 		//insert modStatus options dialog
@@ -111,6 +123,8 @@ dialog=[['useModStatus', 'Use mod-status? (y/n) ', function(use){
 	return false;
 	
 }]]
+
+dialog=dialogUseModeStatus;
 
 
 
