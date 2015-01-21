@@ -70,7 +70,7 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 				
 				console.log(JSON.stringifgy(require('url').parse(url)));
 				
-				require('http').get({hostname:url, path:path auth:{username:config.modStatusUser, password:password}}, function(res){
+				require('http').get({hostname:url, path:path, auth:{username:config.modStatusUser, password:password}}, function(res){
 
 					console.log(rest.status);
 
