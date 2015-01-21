@@ -46,7 +46,7 @@ process.stdin.setEncoding('utf8');
 var util = require('util');
 
 process.stdin.on('data', function (text) {
-  console.log('received data:', util.inspect(text));
+  console.log('received data:', text);
   if (text === 'quit\n') {
     done();
   }
