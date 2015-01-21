@@ -108,7 +108,7 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 	
 }], function(){
 	
-	console.log(JSON.stringify(modStatusResult));
+	console.log(modStatusResult);
 	next();	
 	
 }]
