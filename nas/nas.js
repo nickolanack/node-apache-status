@@ -40,6 +40,24 @@ var config={};
 var dialog=null;
 var wait=false;
 var current;
+
+
+var listener=function (data) {
+	var text=data.toString();
+	var value=text.substring(0,text.length-1);
+	console.log(current[0]+'=>'+current.length+': '+(typeof current[2]));
+	if(current.length==3&&(typeof current[2])=='function'){
+		//use function to parse response, it can also insert additional dialog steps
+		config[current[0]]=current[2](value);
+	}else{
+		//use response as value
+		config[current[0]]=value;
+		
+	}
+	console.log('set ['+current[0]+']='+config[current[0]]);
+	next();
+}
+
 var next=function(){
 	
 	if((!wait)&&dialog.length){
@@ -47,14 +65,11 @@ var next=function(){
 		if((typeof current)=='function'){
 			current();
 		}else{
+			process.stdin.once('data', listener);
 			process.stdout.write(current[1]);
 		}
 		
 	}
-	
-	
-	
-	
 }
 
 var last=function(){
@@ -108,13 +123,25 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 	
 }], function(){
 	
+	var page='';
 	console.log(modStatusResult);
 	modStatusResult.setEncoding('utf8');
 	modStatusResult.on('data', function (chunk) {
-		console.log('BODY: ' + chunk);
+		page+=chunk;
 	});
 	modStatusResult.on('end', function (chunk) {
-		next();	
+		page+=chunk;
+		if(page.indexOf('Apache Server Status')>=0){
+			
+			setInterval(function(){
+				
+								
+				
+			}, 5000);
+			
+			next();	
+		}
+		
 	});
 	
 }]
@@ -133,23 +160,6 @@ var dialogUseModeStatus=[['useModStatus', 'Use mod-status? (y/n) ', function(use
 dialog=dialogUseModeStatus;
 
 
-
-
-process.stdin.on('data', function (data) {
-	var text=data.toString();
-	var value=text.substring(0,text.length-1);
-	console.log(current[0]+'=>'+current.length+': '+(typeof current[2]));
-	if(current.length==3&&(typeof current[2])=='function'){
-		//use function to parse response, it can also insert additional dialog steps
-		config[current[0]]=current[2](value);
-	}else{
-		//use response as value
-		config[current[0]]=value;
-		
-	}
-	console.log('set ['+current[0]+']='+config[current[0]]);
-	next();
-});
 
 next();
 
