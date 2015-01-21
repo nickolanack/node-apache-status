@@ -91,11 +91,15 @@ uniqueActiveIps.forEach(function(ip){
 		last++;
 	}
 	var h=[];
+	var activeSlots=0;
 	is.forEach(function(i){
 		var host=hosts[i];
+		if((['open']).indexOf(m)==-1){
+			activeSlots++;
+		}
 		if(h.indexOf(host)==-1)h.push(host);
 	})
-	var object={ip:ip, numSlots:is.length, hosts:h, slots:is};
+	var object={ip:ip, numSlots:is.length, numActive:activeSlots, hosts:h, slots:is};
 	
 	console.log(JSON.stringify(object));
 	
