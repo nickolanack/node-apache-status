@@ -70,8 +70,9 @@ process.stdin.on('data', function (text) {
 	}else{
 		//use response as value
 		config[current[0]]=text;
+		
 	}
-	console.log('set ['+current[0]+']='+text);
+	console.log('set ['+current[0]+']='+config[current[0]]);
 	next();
 });
 
