@@ -116,7 +116,8 @@ dialog=[['useModStatus', 'Use mod-status? (y/n) ', function(use){
 
 
 process.stdin.on('data', function (text) {
-	var value=text.substring(0,text.length-1);
+	
+	var value=text.substring(0,text.toString().length-1);
 	console.log(current[0]+'=>'+current.length+': '+(typeof current[2]));
 	if(current.length==3&&(typeof current[2])=='function'){
 		//use function to parse response, it can also insert additional dialog steps
