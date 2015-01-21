@@ -37,19 +37,29 @@ require('child_process').exec('httpd -t -D DUMP_VHOSTS', function (error, stdout
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
 var config={};
-var dialog=[['useModStatus', 'Use mod-status? (y/n)', function(use){
+var dialog=null;
+var wait=false;
+var next=function(){
+	if((!wait)&&dialog.length){
+		current=dialog.shift();
+		process.stdout.write(current[1]);
+	}
+}
+
+dialog=[['useModStatus', 'Use mod-status? (y/n) ', function(use){
 	
 	if(use=="y"){
-		dialog=([['modStatusUrl', 'Url for mod-status?', function(url){
+		dialog=([['modStatusUrl', 'Url for mod-status? ', function(url){
 			
-			
+			wait=true;
 			require('http').get(url, function(res) {
 
 				if(res.statusCode==401){
 					//needs user-name and password
 					console.log('url requires authentication');
 					//inject username and password dialogs
-					dialog=([['modStatusUser', 'username for mod-status?'],['modStatusPass', 'password for mod-status?']]).concat(dialog);
+					dialog=([['modStatusUser', 'username for '+config.modStatusUrl+'? '],['modStatusPass', 'password for '+config.modStatusUrl+'? ']]).concat(dialog);
+					wait=false; next();
 				}
 			
 			}).on('error', function(e) {
@@ -66,12 +76,7 @@ var dialog=[['useModStatus', 'Use mod-status? (y/n)', function(use){
 
 
 var current;
-var next=function(){
-	if(dialog.length){
-		current=dialog.shift();
-		process.stdout.write(current[1]);
-	}
-}
+
 process.stdin.on('data', function (text) {
 	var value=text.substring(0,text.length-1);
 	console.log(current[0]+'=>'+current.length+': '+(typeof current[2]));
