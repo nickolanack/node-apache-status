@@ -136,7 +136,7 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 			var parsePage=function(page){
 				var tables=page.split('<table>'); tables.shift();
 				
-				var rows=table[0].split('<tr>'); rows.shift(); //discard first
+				var rows=tables[0].split('<tr>'); rows.shift(); //discard first
 				
 				rows.forEach(function(r){
 					
