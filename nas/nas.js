@@ -165,14 +165,13 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 					
 					
 					var ip=tdatas[10]; 
-					ip=ip.split('</td>')[0];
-					ip=ip.substring(ip.indexOf('>')+1);
+					ip=ip.split('</td>')[0].substring(ip.indexOf('>')+1);
 					ips.push(ip);
 					
 					
 					var mode=tdatas[3];
-					mode=mode.split('</td>')[0];
-					mode=mode.substring(mode.indexOf('>')+1);
+	
+					mode=mode.split('</td>')[0].substring(mode.indexOf('>')+1).replace(/^\s+|\s+$/g,'');
 					modes.push(modeTable[mode]);
 					
 					console.log(mode+' '+modeTable[mode]);	
