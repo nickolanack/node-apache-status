@@ -79,7 +79,7 @@ modes.forEach(function(m,i){
 	if(uniqueActiveIps.indexOf(ip)==-1)uniqueActiveIps.push(ip);
 	
 });
-
+console.log('Active Ips: '+JSON.stringify(uniqueActiveIps));
 uniqueActiveIps.forEach(function(ip){
 	
 	var is=[];
