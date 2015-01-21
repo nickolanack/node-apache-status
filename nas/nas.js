@@ -52,46 +52,54 @@ var last=function(){
 	next();
 }
 
+
+
+var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
+	
+	wait=true;
+	require('http').get(url, function(res) {
+
+		if(res.statusCode==401){
+			//needs user-name and password
+			console.log('url requires authentication');
+			//inject username and password dialogs
+			dialog=([['modStatusUser', 'username for '+config.modStatusUrl+'? '],['modStatusPass', 'password for '+config.modStatusUrl+'? ',function(password){
+				
+				
+				wait=true;
+				
+				console.log(JSON.stringifgy(require('url').parse(url)));
+				
+				require('http').get({hostname:url, path:path auth:{username:config.modStatusUser, password:password}}, function(res){
+
+					console.log(rest.status);
+
+					wait=false; next();
+				
+				}).on('error', function(e){
+				  console.log("Got error: " + e.message);
+				});
+				
+				return password;
+				
+			}]]).concat(dialog);
+			
+		}
+		wait=false; next();
+	
+	}).on('error', function(e) {
+	  console.log("Got error: " + e.message);
+	});
+	
+	return url
+	
+}]]
+
 dialog=[['useModStatus', 'Use mod-status? (y/n) ', function(use){
 	
 	if(use=="y"){
-		dialog=([['modStatusUrl', 'Url for mod-status? ', function(url){
-			
-			wait=true;
-			require('http').get(url, function(res) {
-
-				if(res.statusCode==401){
-					//needs user-name and password
-					console.log('url requires authentication');
-					//inject username and password dialogs
-					dialog=([['modStatusUser', 'username for '+config.modStatusUrl+'? '],['modStatusPass', 'password for '+config.modStatusUrl+'? ',function(password){
-						
-						
-						wait=true;
-						require('http').get({hostname:url, auth:{username:config.modStatusUser, password:password}}, function(res){
-
-							console.log(rest.status);
-
-							wait=false; next();
-						
-						}).on('error', function(e){
-						  console.log("Got error: " + e.message);
-						});
-						
-						return password;
-						
-					}]]).concat(dialog);
-					
-				}
-				wait=false; next();
-			
-			}).on('error', function(e) {
-			  console.log("Got error: " + e.message);
-			});
-			
-			return url
-			
-		}]]).concat(dialog);
+		//insert modStatus options dialog
+		dialog=(modStatusDialog).concat(dialog);
 		return true;
 	}
 	return false;
