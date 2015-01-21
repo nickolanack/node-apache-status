@@ -78,7 +78,7 @@ dialog=[['useModStatus', 'Use mod-status? (y/n) ', function(use){
 						  console.log("Got error: " + e.message);
 						});
 						
-						return username;
+						return password;
 						
 					}]]).concat(dialog);
 					
