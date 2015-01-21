@@ -68,17 +68,38 @@ rows.forEach(function(r, i){
 
 
 
-
+var uniqueActiveIps=[];
 modes.forEach(function(m,i){
 	
 	
 	
 	if((['open']).indexOf(m)>=0)return;
 	active.push(i);
+	var ip=ips[i];
+	if(uniqueActiveIps.indexOf(ip)==-1)activeIps.push(ip);
 	
+});
+
+uniqueActiveIps.forEach(function(ip){
 	
-})
-console.log('Active Slots: '+JSON.stringify(active));
-console.log('Unique Addrs: '+JSON.stringify(unique)+"\n");
+	var is=[];
+	var last=0;
+	
+	while((last=ips.indexOf(ip, last))>=0){
+		is.push(last);
+	}
+	var h=[];
+	is.forEach(function(i){
+		h.push(h[i]);
+	})
+	var object={ip:ip, numSlots:is.length, hosts:hosts};
+	
+	console.log(JSON.stringify(object));
+	
+});
+
+
+//console.log('Active Slots: '+JSON.stringify(active));
+//console.log('Unique Addrs: '+JSON.stringify(unique)+"\n");
 
 };
