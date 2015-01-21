@@ -169,12 +169,13 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 					ip=ip.substring(ip.indexOf('>')+1);
 					ips.push(ip);
 					
+					
 					var mode=tdatas[3];
 					mode=mode.split('</td>')[0];
 					mode=mode.substring(mode.indexOf('>')+1);
 					modes.push(modeTable[mode]);
 					
-							
+					console.log(mode+' '+modeTable[mode]);	
 							
 						
 						
