@@ -141,7 +141,7 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 				rows.forEach(function(r, i){
 					if(i==0)return; //skip header
 					var row=r.split('</tr>')[0];
-					var tdatas=row.split('<td>'); tdatas.shift();
+					var tdatas=row.split('<td'); tdatas.shift();
 					
 					//console.log(r.split('</tr>')[0]);
 					
