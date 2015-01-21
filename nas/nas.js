@@ -45,14 +45,19 @@ var dialog=[['useModStatus', 'Use mod-status? (y/n)', function(use){
 			
 			require('http').get(url, function(res) {
 
-				console.log(res);
+				if(res.statusCode==401){
+					//needs user-name and password
+					console.log('url requires authentication');
+					//inject username and password dialogs
+					dialog=([['modStatusUser', 'username for mod-status?'],['modStatusPass', 'password for mod-status?']]).concat(dialog);
+				}
 			
 			}).on('error', function(e) {
 			  console.log("Got error: " + e.message);
 			});
 			
 			
-		}],['modStatusUser', 'username for mod-status?'],['modStatusPass', 'password for mod-status?']]).concat(dialog);
+		}]]).concat(dialog);
 		return true;
 	}
 	return false;
