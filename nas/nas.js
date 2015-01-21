@@ -109,7 +109,13 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 }], function(){
 	
 	console.log(modStatusResult);
-	next();	
+	modStatusResult.setEncoding('utf8');
+	modStatusResult.on('data', function (chunk) {
+		console.log('BODY: ' + chunk);
+	});
+	modStatusResult.on('end', function (chunk) {
+		next();	
+	});
 	
 }]
 
