@@ -8,8 +8,8 @@ var modStatusPwd='';
 
 //start by getting a list of all active hosts on the server.
 require('child_process').exec('httpd -t -D DUMP_VHOSTS', function (error, stdout, stderr) {
-    console.log('stdout: ' + stdout);
-    console.log('stderr: ' + stderr);
+    //console.log('stdout: ' + stdout);
+    //console.log('stderr: ' + stderr);
     if (error !== null) {
       console.log('exec error: ' + error);
     }else{
@@ -32,7 +32,7 @@ require('child_process').exec('httpd -t -D DUMP_VHOSTS', function (error, stdout
 
 require('http').get("http://media.geolive.ca/server-status", function(res) {
 
-	console.log(res);
+	//console.log(res);
 	
 	
 }).on('error', function(e) {
