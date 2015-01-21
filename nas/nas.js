@@ -134,11 +134,6 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 			console.log('Started Mod-Status Scrapper');
 			
 			
-			
-		
-			
-			var parsePage=function(page){
-			
 			require('./mod-status-parser.js').parse(page);
 			
 			setInterval(function(){
