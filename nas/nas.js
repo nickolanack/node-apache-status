@@ -34,17 +34,22 @@ require('child_process').exec('httpd -t -D DUMP_VHOSTS', function (error, stdout
 		
 
 
-process.stdin.resume();
-process.stdin.setEncoding('utf8');
+//process.stdin.resume();
+//process.stdin.setEncoding('utf8');
 var config={};
 var dialog=null;
 var wait=false;
 var current;
 var next=function(){
+	
 	if((!wait)&&dialog.length){
 		current=dialog.shift();
 		process.stdout.write(current[1]);
 	}
+	
+	
+	
+	
 }
 
 var last=function(){
@@ -73,7 +78,7 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 				
 				require('http').get(urlOpt, function(res){
 
-					console.log(rest.status);
+					console.log('status: '+res.status);
 
 					wait=false; next();
 				
