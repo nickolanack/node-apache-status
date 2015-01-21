@@ -162,7 +162,13 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 					
 					//console.log(r.split('</tr>')[0]);
 					
-					//if(i==1){
+					if(i==1){
+						
+						tdatas.forEach(function(t,i){
+							console.log(i+': '+t);
+						});
+						
+					}
 						
 						
 							
