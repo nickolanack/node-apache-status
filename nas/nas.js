@@ -30,24 +30,29 @@ require('child_process').exec('httpd -t -D DUMP_VHOSTS', function (error, stdout
 
 
 
-require('http').get("http://media.geolive.ca/server-status", function(res) {
 
-	//console.log(res);
-	
-	
-}).on('error', function(e) {
-  console.log("Got error: " + e.message);
-});
 		
 
 
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
 var config={};
-var dialog=[['useModStatus', 'Use mod-status? (y/n)', function(response){
+var dialog=[['useModStatus', 'Use mod-status? (y/n)', function(use){
 	
-	if(response=="y\n"){
-		dialog=([['modStatusUrl', 'Url for mod-status?'],['modStatusUser', 'username for mod-status?'],['modStatusPass', 'password for mod-status?']]).concat(dialog);
+	if(use=="y"){
+		dialog=([['modStatusUrl', 'Url for mod-status?', function(url){
+			
+			
+			require('http').get(url, function(res) {
+
+				console.log(res);
+			
+			}).on('error', function(e) {
+			  console.log("Got error: " + e.message);
+			});
+			
+			
+		}],['modStatusUser', 'username for mod-status?'],['modStatusPass', 'password for mod-status?']]).concat(dialog);
 		return true;
 	}
 	return false;
@@ -63,13 +68,14 @@ var next=function(){
 	}
 }
 process.stdin.on('data', function (text) {
+	var value=text.substring(0,text.length-1);
 	console.log(current[0]+'=>'+current.length+': '+(typeof current[2]));
 	if(current.length==3&&(typeof current[2])=='function'){
 		//use function to parse response, it can also insert additional dialog steps
-		config[current[0]]=current[2](text);
+		config[current[0]]=current[2](value);
 	}else{
 		//use response as value
-		config[current[0]]=text;
+		config[current[0]]=value;
 		
 	}
 	console.log('set ['+current[0]+']='+config[current[0]]);
