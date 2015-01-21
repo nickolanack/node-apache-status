@@ -134,7 +134,7 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 			console.log('Started Mod-Status Scrapper');
 			
 			var parsePage=function(page){
-				var tables=page.split('<table>'); tables.shift();
+				var tables=page.split('<table'); tables.shift();
 				
 				var rows=tables[0].split('<tr>'); rows.shift(); //discard first
 				
