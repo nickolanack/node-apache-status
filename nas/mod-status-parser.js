@@ -86,8 +86,9 @@ uniqueActiveIps.forEach(function(ip){
 	var last=0;
 	
 	while((last=ips.indexOf(ip, last))>=0){
-		last++;
+		
 		is.push(last);
+		last++;
 	}
 	var h=[];
 	is.forEach(function(i){
