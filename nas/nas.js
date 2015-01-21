@@ -46,6 +46,7 @@ var next=function(){
 		process.stdout.write(current[1]);
 	}
 }
+
 var last=function(){
 	dialog=([current]).concat(dialog);
 	next();
@@ -64,8 +65,9 @@ dialog=[['useModStatus', 'Use mod-status? (y/n) ', function(use){
 					console.log('url requires authentication');
 					//inject username and password dialogs
 					dialog=([['modStatusUser', 'username for '+config.modStatusUrl+'? '],['modStatusPass', 'password for '+config.modStatusUrl+'? ']]).concat(dialog);
-					wait=false; next();
+					
 				}
+				wait=false; next();
 			
 			}).on('error', function(e) {
 			  console.log("Got error: " + e.message);
