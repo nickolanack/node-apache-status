@@ -172,9 +172,11 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 					var mode=tdatas[3];
 	
 					mode=mode.split('</td>')[0].substring(mode.indexOf('>')+1).replace(/^\s+|\s+$/g,'');
+					mode=mode.split('</b>')[0];
+					mode=mode.split('<b>').pop();
 					modes.push(modeTable[mode]);
 					
-					console.log(mode+' '+modeTable[mode]);	
+					//console.log(mode+' '+modeTable[mode]);	
 							
 						
 						
