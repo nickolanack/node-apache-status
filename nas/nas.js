@@ -133,7 +133,15 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 		if(page.indexOf('Apache Server Status')>=0){
 			console.log('Started Mod-Status Scrapper');
 			
+			
+			
+		
+			
 			var parsePage=function(page){
+				
+				
+				var ips=[];
+				
 				var tables=page.split('<table'); tables.shift();
 				
 				var rows=tables[0].split('<tr>'); rows.shift(); //discard first
@@ -150,13 +158,20 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 						tdatas.forEach(function(t,i){
 							
 							var tdata=t.split('</td>')[0];
-							console.log(i+': '+tdata);
+							var ip=tdata[10];
+							ip=ip.substring(ip.indexOf('>')+1);
+							
+							ips.push(ip);
+							
+							
 							
 						});
 						
 					}
 					
 				});
+				
+				console.log(ips);
 				
 			};
 			
