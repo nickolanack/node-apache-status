@@ -204,7 +204,7 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 					
 				})
 				console.log('Active Slots: '+JSON.stringify(active));
-				console.log('Unique Addrs: 'JSON.stringify(unique)+"\n");
+				console.log('Unique Addrs: '+JSON.stringify(unique)+"\n");
 				
 			};
 			
