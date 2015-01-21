@@ -68,7 +68,7 @@ dialog=[['useModStatus', 'Use mod-status? (y/n) ', function(use){
 						
 						
 						wait=true;
-						require('http').get({hostname:url, auth:{username:config.modStatusUser, password:password}, function(res){
+						require('http').get({hostname:url, auth:{username:config.modStatusUser, password:password}}, function(res){
 
 							console.log(rest.status);
 
