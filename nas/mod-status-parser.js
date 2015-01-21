@@ -76,7 +76,7 @@ modes.forEach(function(m,i){
 	if((['open']).indexOf(m)>=0)return;
 	active.push(i);
 	var ip=ips[i];
-	if(uniqueActiveIps.indexOf(ip)==-1)activeIps.push(ip);
+	if(uniqueActiveIps.indexOf(ip)==-1)uniqueActiveIps.push(ip);
 	
 });
 
