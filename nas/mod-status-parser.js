@@ -73,7 +73,7 @@ modes.forEach(function(m,i){
 	
 	
 	
-	if((['reading', 'writing', 'keep-alive']).indexOf(m)==-1)return;
+	if((['reading', 'writing']).indexOf(m)==-1)return;
 	active.push(i);
 	var ip=ips[i];
 	if(uniqueActiveIps.indexOf(ip)==-1)uniqueActiveIps.push(ip);
@@ -94,7 +94,7 @@ uniqueActiveIps.forEach(function(ip){
 	var activeSlots=0;
 	is.forEach(function(i){
 		var host=hosts[i];
-		if((['reading', 'writing', 'keep-alive']).indexOf(modes[i])>=0){
+		if((['reading', 'writing']).indexOf(modes[i])>=0){
 			activeSlots++;
 		}
 		if(h.indexOf(host)==-1)h.push(host);
