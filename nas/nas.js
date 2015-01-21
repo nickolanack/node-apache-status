@@ -47,7 +47,7 @@ var config={};
 var dialog=[['useModStatus', 'Use mod-status? (y/n)', function(response){
 	
 	if(response=="y\n"){
-		dialog.splice(0,0,[]);
+		dialog.splice(0,0,[['modStatusUrl', 'Url for mod-status?'],['modStatusUser', 'username for mod-status?'],['modStatusPass', 'password for mod-status?']]);
 		return true;
 	}
 	return false;
@@ -64,7 +64,13 @@ var next=function(){
 	}
 }
 process.stdin.on('data', function (text) {
-	config[current[0]]=current[2]();
+	if(current.length==3&&(typeof current[2])=='function'){
+		//use function to parse response, it can also insert additional dialog steps
+		config[current[0]]=current[2]();
+	}else{
+		//use response as value
+		config[current[0]]=text;
+	}
 	next();
 });
 
