@@ -139,8 +139,13 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 			
 			var parsePage=function(page){
 				
+				var modeTable={"_":"waiting", "S":"starting", "R":"reading",
+						"W":"sending", "K":"keep-alive", "D":"dns-lookup",
+						"C":"closing", "L":"logging", "G":"gracefully-finishing",
+						"I":"idle-cleanup", ".":"open"};
 				
 				var ips=[];
+				var modes=[];
 				
 				var tables=page.split('<table'); tables.shift();
 				
@@ -153,25 +158,32 @@ var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url){
 					
 					//console.log(r.split('</tr>')[0]);
 					
-					if(i==1){
+					//if(i==1){
 						
 						tdatas.forEach(function(t,i){
 							
 							var tdata=t.split('</td>')[0];
 							var ip=tdata[10];
 							ip=ip.substring(ip.indexOf('>')+1);
-							
 							ips.push(ip);
+							
+							var mode=tdata[3];
+							mode=mode.substring(mode.indexOf('>')+1);
+							modes.push(modeTable[mode]);
 							
 							
 							
 						});
 						
-					}
+					//}
 					
 				});
 				
-				console.log(ips);
+				modes.forEach(function(m,i){
+					
+					console.log(JSON.stringify({mode:m, ip:ips[i]}));
+					
+				})
 				
 			};
 			
