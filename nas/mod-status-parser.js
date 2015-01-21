@@ -6,7 +6,7 @@ module.exports = {
 function parse(page){
 
 var modeTable={"_":"waiting", "S":"starting", "R":"reading",
-		"W":"sending", "K":"keep-alive", "D":"dns-lookup",
+		"W":"writing", "K":"keep-alive", "D":"dns-lookup",
 		"C":"closing", "L":"logging", "G":"gracefully-finishing",
 		"I":"idle-cleanup", ".":"open"};
 
@@ -73,7 +73,7 @@ modes.forEach(function(m,i){
 	
 	
 	
-	if((['open']).indexOf(m)>=0)return;
+	if((['reading', 'writing', 'keep-alive']).indexOf(m)==-1)return;
 	active.push(i);
 	var ip=ips[i];
 	if(uniqueActiveIps.indexOf(ip)==-1)uniqueActiveIps.push(ip);
@@ -94,7 +94,7 @@ uniqueActiveIps.forEach(function(ip){
 	var activeSlots=0;
 	is.forEach(function(i){
 		var host=hosts[i];
-		if((['open']).indexOf(modes[i])==-1){
+		if((['reading', 'writing', 'keep-alive']).indexOf(modes[i])>=0){
 			activeSlots++;
 		}
 		if(h.indexOf(host)==-1)h.push(host);
