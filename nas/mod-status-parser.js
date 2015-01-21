@@ -94,7 +94,7 @@ uniqueActiveIps.forEach(function(ip){
 	var activeSlots=0;
 	is.forEach(function(i){
 		var host=hosts[i];
-		if((['open']).indexOf(m)==-1){
+		if((['open']).indexOf(modes[i])==-1){
 			activeSlots++;
 		}
 		if(h.indexOf(host)==-1)h.push(host);
