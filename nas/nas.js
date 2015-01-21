@@ -64,7 +64,23 @@ dialog=[['useModStatus', 'Use mod-status? (y/n) ', function(use){
 					//needs user-name and password
 					console.log('url requires authentication');
 					//inject username and password dialogs
-					dialog=([['modStatusUser', 'username for '+config.modStatusUrl+'? '],['modStatusPass', 'password for '+config.modStatusUrl+'? ']]).concat(dialog);
+					dialog=([['modStatusUser', 'username for '+config.modStatusUrl+'? '],['modStatusPass', 'password for '+config.modStatusUrl+'? ',function(password){
+						
+						
+						wait=true;
+						require('http').get({hostname:url, auth:{username:config.modStatusUser, password:password}, function(res){
+
+							console.log(rest.status);
+
+							wait=false; next();
+						
+						}).on('error', function(e){
+						  console.log("Got error: " + e.message);
+						});
+						
+						return username;
+						
+					}]]).concat(dialog);
 					
 				}
 				wait=false; next();
