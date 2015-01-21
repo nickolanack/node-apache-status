@@ -47,7 +47,7 @@ var config={};
 var dialog=[['useModStatus', 'Use mod-status? (y/n)', function(response){
 	
 	if(response=="y\n"){
-		dialog.splice(0,0,[['modStatusUrl', 'Url for mod-status?'],['modStatusUser', 'username for mod-status?'],['modStatusPass', 'password for mod-status?']]);
+		dialog=([['modStatusUrl', 'Url for mod-status?'],['modStatusUser', 'username for mod-status?'],['modStatusPass', 'password for mod-status?']]).concat(dialog);
 		return true;
 	}
 	return false;
