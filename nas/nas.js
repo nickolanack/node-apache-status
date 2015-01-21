@@ -39,11 +39,16 @@ process.stdin.setEncoding('utf8');
 var config={};
 var dialog=null;
 var wait=false;
+var current;
 var next=function(){
 	if((!wait)&&dialog.length){
 		current=dialog.shift();
 		process.stdout.write(current[1]);
 	}
+}
+var last=function(){
+	dialog=([current]).concat(dialog);
+	next();
 }
 
 dialog=[['useModStatus', 'Use mod-status? (y/n) ', function(use){
@@ -66,6 +71,7 @@ dialog=[['useModStatus', 'Use mod-status? (y/n) ', function(use){
 			  console.log("Got error: " + e.message);
 			});
 			
+			return url
 			
 		}]]).concat(dialog);
 		return true;
@@ -75,7 +81,7 @@ dialog=[['useModStatus', 'Use mod-status? (y/n) ', function(use){
 }]]
 
 
-var current;
+
 
 process.stdin.on('data', function (text) {
 	var value=text.substring(0,text.length-1);
