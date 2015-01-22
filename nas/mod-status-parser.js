@@ -28,13 +28,13 @@ rows.forEach(function(r, i){
 	
 	//console.log(r.split('</tr>')[0]);
 	
-	if(i==1){
-		
-		tdatas.forEach(function(t,i){
-			console.log(i+': '+t);
-		});
-		
-	}
+//	if(i==1){
+//		
+//		tdatas.forEach(function(t,i){
+//			console.log(i+': '+t);
+//		});
+//		
+//	}
 		
 		
 			
