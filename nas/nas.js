@@ -14,17 +14,10 @@ require('child_process').exec('httpd -t -D DUMP_VHOSTS', function (error, stdout
       console.log('exec error: ' + error);
     }else{
     	
-    	
-    	
     	var defaultServer;
     	var allNames=[], allNameDetails=[];
     	var allAliases=[], allAliasDetails=[];
-    	
-    	
-    	
-    	
-    	
-    	
+
     }
 });
 
