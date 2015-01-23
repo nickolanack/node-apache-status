@@ -26,7 +26,7 @@ rows.forEach(function(r, i){
 	var row=r.split('</tr>')[0];
 	var tdatas=row.split('<td'); tdatas.shift();
 	
-	//console.log(r.split('</tr>')[0]);
+//console.log(r.split('</tr>')[0]);
 	
 //	if(i==1){
 //		
