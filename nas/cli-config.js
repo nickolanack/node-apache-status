@@ -7,7 +7,13 @@
  * 
  * config queue:: an array of configuration operations.
  * configuration operation:: an array [string:variable name, string:prompt, [function:optional input parser]], if 
- * 		set the function parser should return the formatted value to put into the config object
+ * 		set the function parser should return the formatted value to be put into the config object
+ * 		the function parser is passed 3 arguments, the input string, the config object, and the cli object which 
+ * 		is a container for a number of simple functions that can be used to alter the flow of the proccessor.
+ * 
+ * cli object:: is passed as the third argument to each parser function, is not necessary to use this unless the flow must be stopped via cli.wait()
+ * 		and resumed via cli.next() or cli.last() (to handle async operations) or to inject conditional operations via cli.insert([operation, ...]) 
+ * 		inserted operations are proccesed imediately after the current operation.
  * 
  * @example: simple usage.
  * 
