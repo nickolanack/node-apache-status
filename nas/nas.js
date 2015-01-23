@@ -21,7 +21,7 @@
 //    }
 //});
 
-require('nas-config.js').config(function(config){
+require('nas-config.js').config({}, function(config){
 
 	setInterval(function(){
 		
