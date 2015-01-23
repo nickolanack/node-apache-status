@@ -22,7 +22,8 @@
 //});
 
 require('./nas-config.js').configure({}, function(config){
-
+	console.log('Started Mod-Status Scrapper');
+	
 	setInterval(function(){
 		
 		
