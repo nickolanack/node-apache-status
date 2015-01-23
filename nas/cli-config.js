@@ -134,8 +134,8 @@ var cli={
 
 
 
-function configure(steps, fn){
-	config={};
+function configure(config, steps, fn){
+	config=config;
 	wait=false;
 	dialog=steps;
 	callback=fn;
