@@ -1,8 +1,62 @@
 
 /**
- * cli, will process a queue of config operations, finally calling the callback function with the config object.
- * a config queue is an array of config operations.
- * a config operation is an array with entries, [0] a variable name, [1] a string prompt, and optionally [3] a function parser which should return the formatted value 
+ * Command Line Configuration;
+ * 
+ * cli-config, will process a queue of command line configuration operations, and then return 
+ * (via a callback) the resulting config object.
+ * 
+ * config queue:: an array of configuration operations.
+ * configuration operation:: an array [string:variable name, string:prompt, [function:optional input parser]], if 
+ * 		set the function parser should return the formatted value to put into the config object
+ * 
+ * @example: simple usage.
+ * 
+ * 	require('./cli-config').configure(
+ * 		
+ * 		//config queue
+ * 		[['username', 'enter username: '], ['password', 'enter password: ']],
+ * 		function(config){
+ * 			//run something with config...
+ * 			console.log(JSON.stringify(config)); //should print: {username:'...', password:'...'};
+ * 		}
+ *	);
+ *
+ *	//console:
+ *	>enter username: bob
+ *  >enter password: loblaw
+ *  >
+ *  
+ * @example: simple usage with parser function.
+ * 
+ * 	require('./cli-config').configure(
+ * 		
+ * 		//config queue
+ * 		[
+ * 			[
+ * 				//1: email prompt
+ * 				'email', 'enter username or email: ', function(input, config, cli){
+ * 					if(input.indexOf('@gmail.com')!=-1)return input;
+ * 					return input+'@gmail.com'; 
+ * 				}
+ * 			], 
+ * 			[
+ * 				//2: password prompt
+ * 				'password', 'enter password: '
+ * 			], 
+ * 
+ * 			...
+ *		],
+ * 		function(config){
+ * 			//run something with config...
+ * 			console.log(JSON.stringify(config)); //should print: {email:'...', password:'...'};
+ * 		}
+ *	);
+ *
+ *	//console:
+ *	>enter username or email: bob
+ *  >enter password: loblaw
+ *  >  
+ * 
  */
 
 
