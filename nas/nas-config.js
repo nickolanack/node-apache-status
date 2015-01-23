@@ -6,7 +6,10 @@
 
 
 
-function configure(callback){
+function configure(config, callback){
+	
+	
+	
 	
 	var modStatusResult=null;
 	var modStatusDialog=[['modStatusUrl', 'Url for mod-status? ', function(url, config, cli){
@@ -70,17 +73,38 @@ function configure(callback){
 		
 	}]
 
-
-	require('./cli-config.js').configure([['useModStatus', 'Use mod-status? (y/n) ', function(use, config, cli){
-		
-		if(use=="y"){
-			//insert modStatus options dialog
-			cli.insert(modStatusDialog);
-			return true;
+	
+	fs.exists('./nas-config.json', function(exists){
+		if(exists){
+			var o=require('./nas-config.json');
+			Object.keys(o).forEach(function(k){
+				config[k]=o[k];
+			});
+			callback(config);
+		}else{
+			
+			require('./cli-config.js').configure(config, [['useModStatus', 'Use mod-status? (y/n) ', function(use, config, cli){
+				
+				if(use=="y"){
+					//insert modStatus options dialog
+					cli.insert(modStatusDialog);
+					return true;
+				}
+				return false;
+				
+			}]], function(config){
+				
+				callback(config);
+				fs.writeFile('./nas-config.json', JSON.stringify(config), function (err) {
+					  if (err) throw err;
+				});
+			});
+			
 		}
-		return false;
 		
-	}]], callback);
+	});
+
+	
 	
 }
 
