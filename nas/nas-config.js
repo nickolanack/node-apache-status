@@ -74,7 +74,7 @@ function configure(config, callback){
 	}]
 
 	
-	fs.exists('./nas-config.json', function(exists){
+	require('fs').exists('./nas-config.json', function(exists){
 		if(exists){
 			var o=require('./nas-config.json');
 			Object.keys(o).forEach(function(k){
@@ -95,7 +95,7 @@ function configure(config, callback){
 			}]], function(config){
 				
 				callback(config);
-				fs.writeFile('./nas-config.json', JSON.stringify(config), function (err) {
+				require('fs').writeFile('./nas-config.json', JSON.stringify(config), function (err) {
 					  if (err) throw err;
 				});
 			});
