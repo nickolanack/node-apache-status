@@ -144,5 +144,5 @@ function configure(config, steps, fn){
 }
 
 module.exports = {
-		configure: configure;
+		configure: configure
 }

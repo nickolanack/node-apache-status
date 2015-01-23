@@ -109,5 +109,5 @@ function configure(config, callback){
 }
 
 module.exports = {
-		configure: configure;
+		configure: configure
 }
