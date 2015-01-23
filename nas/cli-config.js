@@ -15,6 +15,9 @@
  * 		and resumed via cli.next() or cli.last() (to handle async operations) or to inject conditional operations via cli.insert([operation, ...]) 
  * 		inserted operations are proccesed imediately after the current operation.
  * 
+ * the configuration queue can also contain (at any position) a function, these are executed like: fn(config, cli); and must call cli.next() to continue
+ * 
+ * 
  * @example: simple usage.
  * 
  * 	require('./cli-config').configure(
