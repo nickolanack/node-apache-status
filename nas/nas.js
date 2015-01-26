@@ -28,8 +28,6 @@ ApacheMonitor.prototype._processStatus=function(data){
 
 	//console.log(JSON.stringify(skimObject(data), null, "\t"));
 
-	// should probably re-write this to set last from current, 
-	// and current from data, instead of setting last below...
 	me._last=me._current;
 	me._last=me._last===undefined?emptyObject(data):me._last;
 	me._current=data;
@@ -37,7 +35,7 @@ ApacheMonitor.prototype._processStatus=function(data){
 	me._compare(me._current, me._last);
 	me._count++; 
 	
-	//if(me._count>=1)me._stop(); 
+	//if(me._count>=1)me._stop(); //for debug purposes.
 };
 
 ApacheMonitor.prototype._slotMap=function(cmp, arr){
@@ -58,6 +56,7 @@ ApacheMonitor.prototype.slotsWithIp=function(ip){
 
 
 ApacheMonitor.prototype._compare=function(a, b){
+	
 	var me=this;
 	a.unique_ips.forEach(function(ip){
 		if(b.unique_ips.indexOf(ip)==-1){
@@ -71,7 +70,6 @@ ApacheMonitor.prototype._compare=function(a, b){
 		}
 	});
 
-	
 	a.unique_active_ips.forEach(function(ip){
 		if(b.unique_active_ips.indexOf(ip)==-1){
 			me.emit('ip.activate', ip);	
@@ -83,7 +81,6 @@ ApacheMonitor.prototype._compare=function(a, b){
 			me.emit('ip.deactivate', ip);
 		}
 	});
-
 
 	//console.log(JSON.stringify(b, null, "\t"));
 
@@ -133,7 +130,7 @@ a.on('ip.activate', function(ip){
 	require('./node-freegeoip.js').geocode(ip, function(obj){
 
 
-		console.log(
+		console.log((new Date().toISOString())+' | '+
 			obj.ip+': '+obj.city+', '+
 			obj.region_name+', '+obj.country_name);
 	
