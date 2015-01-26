@@ -39,22 +39,7 @@ ApacheMonitor.prototype._processStatus=function(data){
 	
 	//if(me._count>=1)me._stop(); 
 };
-//basiticall just returns the same object with all its 
-//conntents stripped out
-emptyObject=function(data){
 
-	var empty={};
-	Object.keys(data).forEach(function(k){
-		if(data[k] instanceof Array){
-			empty[k]=[];
-		}
-
-		//console.log(typeof data[k]);
-
-	});
-	//process.exit(0);
-	return empty;
-}
 ApacheMonitor.prototype._slotMap=function(cmp, arr){
 
 	var me=this;
@@ -155,6 +140,26 @@ a.on('ip.activate', function(ip){
 	});
 });
 
+//just returns the same object with all its 
+//contents stripped out
+emptyObject=function(data){
+
+	var empty={};
+	Object.keys(data).forEach(function(k){
+		if(data[k] instanceof Array){
+			empty[k]=[];
+		}
+
+		//console.log(typeof data[k]);
+
+	});
+	//process.exit(0);
+	return empty;
+}
+
+//returns the object, but with each array item, shortened. 
+//this will produce printable object with less content to give an idea of the 
+//objects structure
 function skimObject(o){
 
 	var obj={};
