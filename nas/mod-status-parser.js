@@ -14,6 +14,10 @@ var ips=[];
 var modes=[];
 var hosts=[];
 
+var methods=[];
+var urls=[];
+var protocols=[];
+
 var active=[];	
 var unique=[];
 
@@ -28,13 +32,15 @@ rows.forEach(function(r, i){
 	
 //console.log(r.split('</tr>')[0]);
 	
-//	if(i==1){
-//		
-//		tdatas.forEach(function(t,i){
-//			console.log(i+': '+t);
-//		});
-//		
-//	}
+	//set this to true to print the first array of entry sections
+	var tdPrintExit=false;
+	if(tdPrintExit&&i==1){
+		
+		tdatas.forEach(function(t,i){
+			console.log(i+': '+t);
+		});
+		process.exit(0);	
+	}
 		
 		
 			
@@ -58,6 +64,16 @@ rows.forEach(function(r, i){
 	
 	var host=tdatas[11].split('</td>')[0].split('nowrap>').pop();
 	hosts.push(host);
+	
+	var request=tdatas[12].split('</td>')[0].split('nowrap>').pop().split(' ');
+	var method=request[0];
+	var url=request[1];
+	var protocol=request[2];
+
+	methods.push(method);
+	urls.push(url);
+	protocols.push(protocol);
+	
 	//console.log(mode+' '+modeTable[mode]);	
 			
 		
@@ -69,13 +85,14 @@ rows.forEach(function(r, i){
 
 
 var uniqueActiveIps=[];
+var uniqueIps=[];
 modes.forEach(function(m,i){
 	
-	
-	
+	var ip=ips[i];
+	if(uniqueIps.indexOf(ip)==-1)uniqueIps.push(ip);
+
 	if((['reading', 'writing']).indexOf(m)==-1)return;
 	active.push(i);
-	var ip=ips[i];
 	if(uniqueActiveIps.indexOf(ip)==-1)uniqueActiveIps.push(ip);
 	
 });
@@ -91,20 +108,36 @@ uniqueActiveIps.forEach(function(ip){
 		last++;
 	}
 	var h=[];
-	var activeSlots=0;
+	var activeSlots=[];
+	var activeHosts=[];
 	is.forEach(function(i){
 		var host=hosts[i];
 		if((['reading', 'writing']).indexOf(modes[i])>=0){
-			activeSlots++;
+			activeSlots.push(i);
+			activeHosts.push(host);
 		}
 		if(h.indexOf(host)==-1)h.push(host);
 	})
-	var object={ip:ip, numSlots:is.length, numActive:activeSlots, hosts:h, slots:is};
+	var object={ip:ip, active_slot_indexes:activeSlots, active_slot_hosts:activeHosts,unique_host_names:h, total_slots_count:is.length};
 	
-	console.log(JSON.stringify(object));
+	//console.log(JSON.stringify(object));
 	
 });
 
+return {
+	slot_addresses:ips, 
+	slot_host_names:hosts,
+	slot_methods:methods,
+	slot_urls:urls,
+	slot_protocols:protocols,
+	slot_modes:modes,
+	active_slot_indexes:active, 
+	unique_active_ips:uniqueActiveIps,
+	unique_ips:uniqueIps
+	
+	
+	
+}
 
 //console.log('Active Slots: '+JSON.stringify(active));
 //console.log('Unique Addrs: '+JSON.stringify(unique)+"\n");

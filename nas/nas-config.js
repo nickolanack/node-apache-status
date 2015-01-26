@@ -64,6 +64,8 @@ function configure(config, callback){
 		modStatusResult.on('end', function (chunk) {
 			page+=chunk;
 			if(page.indexOf('Apache Server Status')>=0){
+				console.log('Started Mod-Status Scrapper');
+				
 				cli.next();	
 			}
 			
