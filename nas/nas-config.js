@@ -49,7 +49,7 @@ function configure(config, callback){
 			cli.next();
 		
 		}).on('error', function(e) {
-		  console.log("Got error: " + e.message);
+			  console.error(e);
 		});
 		
 		return url

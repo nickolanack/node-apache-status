@@ -45,14 +45,34 @@ ApacheMonitor.prototype._slotMap=function(cmp, arr){
 	arr.forEach(function(_ip, i){
 		if(_ip===ip)slots.push(i);
 	});
+	console.log('_slotMap'); console.log(JSON.stringify(slots)); process.exit(0);
 	return slots;
 };
 
 ApacheMonitor.prototype.slotsWithIp=function(ip){
 	var me=this;
-	return me._slotMap(ip, me._current.ips);
-
+	console.log('slotsWithIp'); 
+	var slots=me._slotMap(ip, me._current.ips);
+	console.log(JSON.stringify(slots)); process.exit(0);
+	return slots;
 };
+
+ApacheMonitor.prototype._list=function(slots, arr){
+	var list=[];
+	slots.forEach(function(i){
+		list.push(arr[i]);
+	});
+	return list;
+};
+
+
+
+ApacheMonitor.prototype.listHosts=function(slots){
+	var me=this;
+	return me._list(slots, me._current.hosts);
+};
+
+
 
 
 ApacheMonitor.prototype._compare=function(a, b){
@@ -110,8 +130,8 @@ function monitor(callback){
 					});
 				}
 		
-			}).on('error', function(e){
-			  console.log("Got error: " + e.message);
+			}).on('error', function(e) {
+				  console.error(e);
 			});
 			
 			
@@ -133,6 +153,13 @@ a.on('ip.activate', function(ip){
 		console.log((new Date().toISOString())+' | '+
 			obj.ip+': '+obj.city+', '+
 			obj.region_name+', '+obj.country_name);
+		
+		console.log("\thosts:");
+		var hosts=a.slotsWithIp(ip);
+		hosts=a.listHosts(hosts);
+		distinctArray(hosts).forEach(function(host){
+			console.log("\t"+host);
+		});
 	
 	});
 });
@@ -168,3 +195,12 @@ function skimObject(o){
 
 	return obj;
 }
+
+
+function distinctArray(list){
+	var unique=[];
+	list.forEach(function(a){
+		if(unique.indexOf(a)==-1)unique.push(a);
+	});
+	return unique;
+};
